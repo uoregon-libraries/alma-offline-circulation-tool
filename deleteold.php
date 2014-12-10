@@ -34,7 +34,7 @@
 			
 			// After removing all of those SQL entries, this next part should remove any files whose filesystem timestamps are older than $deletetime. We are assuming that files do not get "modified" when they are downloaded and stuff, so under normal circumstances this value should be close to if not equal to the creation time.
 			
-			$DIR = './output';
+			$DIR = substr(__FILE__, 0, strrpos(__FILE__, '/')) . '/output';
 			$DIR_CONTENTS = array_diff(scandir($DIR), array('..','.'));
 			rsort($DIR_CONTENTS);
 			
