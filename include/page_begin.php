@@ -15,8 +15,8 @@
 		
 		<title><?php echo $MAIN_TITLE; if(isset($page_title)) echo " - $page_title"; ?></title>
 		
-		<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
-		<link href="http://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet" type="text/css" />
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+		<link href="https://fonts.googleapis.com/css?family=Oxygen+Mono" rel="stylesheet" type="text/css" />
 		<link href="styles/style.css" media="all" rel="stylesheet" type="text/css" />
 		<?php if(isset($scripts)) echo "<script defer language=\"javascript\" src=\"scripts/$scripts\" type=\"text/javascript\"></script>"; else echo "\n" ?>
 	</head>
