@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      context: .
+    depends_on:
+      - db
+
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: offline-circ
+      MYSQL_USER: offline-circ
+      MYSQL_PASSWORD: offline-circ
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db: {}

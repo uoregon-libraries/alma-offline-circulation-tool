@@ -28,9 +28,9 @@
 	* library | datetime | retorlo | itmbarcd | itmcalnm | ptrbarcd | ptrname  | saved  *
 	************************************************************************************/
 	
-	$DB_SERV = 'server';
-	$DB_USER = 'user';
-	$DB_PASS = 'password';
-	$DB_NAME = 'database';
-	$DB_TABL = 'table';
+	$DB_SERV = 'db';
+	$DB_USER = 'offline-circ';
+	$DB_PASS = 'offline-circ';
+	$DB_NAME = 'offline-circ';
+	$DB_TABL = 'items';
 ?>
