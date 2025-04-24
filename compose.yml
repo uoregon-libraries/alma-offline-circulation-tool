@@ -14,6 +14,7 @@ services:
       MYSQL_PASSWORD: offline-circ
     volumes:
       - db:/var/lib/mysql
+      - ./db-struct.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   db: {}

@@ -32,5 +32,5 @@
 	$DB_USER = 'offline-circ';
 	$DB_PASS = 'offline-circ';
 	$DB_NAME = 'offline-circ';
-	$DB_TABL = 'items';
+	$DB_TABL = 'circulation';
 ?>
