@@ -1,9 +1,9 @@
 <?php
-	include_once('include/variables.php');
+  include_once('include/variables.php');
 ?>
-			<footer>
-				<?php echo $FOOTER_TEXT; ?>
-			</footer>
-		</div>
-	</body>
+      <footer>
+        <?php echo $FOOTER_TEXT; ?>
+      </footer>
+    </div>
+  </body>
 </html>
