@@ -4,6 +4,8 @@ services:
       context: .
     depends_on:
       - db
+    volumes:
+      - output:/var/www/html/output
 
   db:
     image: mariadb:10.6
@@ -18,3 +20,4 @@ services:
 
 volumes:
   db: {}
+  output: {}
