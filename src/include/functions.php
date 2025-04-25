@@ -7,7 +7,7 @@
 			function ($line) use ($delimiter, $trim_fields) {
 				return array_map(
 					function ($field) {
-						return str_replace('!!Q!!', '"', utf8_decode(urldecode($field)));
+						return str_replace('!!Q!!', '"', urldecode($field));
 					},
 					$trim_fields ? array_map('trim', explode($delimiter, $line)) : explode($delimiter, $line)
 				);
@@ -17,7 +17,7 @@
 				preg_replace_callback(
 					'/"(.*?)"/s',
 					function ($field) {
-						return urlencode(utf8_encode($field[1]));
+						return urlencode($field[1]);
 					},
 					$enc = preg_replace('/(?<!")""/', '!!Q!!', $csv_string)
 				)
