@@ -1,0 +1,5 @@
+# Baremetal:
+0 2 * * * cd /var/www/html && /usr/bin/php deleteold.php
+
+# In-container:
+0 2 * * * docker compose run --rm -it web php deleteold.php
