@@ -1,0 +1,32 @@
+FROM rockylinux:9
+
+# Install Apache, LDAP module, and Python (for config generation)
+RUN dnf update -y && dnf upgrade --refresh -y && \
+    dnf install -y httpd mod_ldap python3 && \
+    dnf clean all
+
+# Copy Apache configuration template and helper scripts
+COPY docker/apache.conf.template /etc/httpd/conf.d/app.conf.template
+COPY docker/httpd-foreground /usr/local/bin/
+COPY docker/apache-entrypoint.sh /usr/local/bin/
+COPY docker/configure-apache.py /usr/local/bin/
+
+# Make sure all scripts are executable
+RUN chmod +x /usr/local/bin/*
+
+# Copy the static assets in for Apache to serve
+COPY src/scripts /var/www/html/scripts
+COPY src/styles /var/www/html/styles
+
+# Redirect Apache logs to stdout/stderr for container logging
+RUN sed -ri \
+		-e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
+		-e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+		-e 's!^(\s*TransferLog)\s+\S+!\1 /proc/self/fd/1!g' \
+		"/etc/httpd/conf/httpd.conf" \
+	;
+
+STOPSIGNAL SIGWINCH
+EXPOSE 80
+ENTRYPOINT ["/usr/local/bin/apache-entrypoint.sh"]
+CMD ["/usr/local/bin/httpd-foreground"]

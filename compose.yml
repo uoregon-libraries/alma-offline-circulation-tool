@@ -1,11 +1,21 @@
 services:
-  web:
+  app:
     build:
       context: .
+      dockerfile: ./docker/Dockerfile-app
     depends_on:
       - db
     volumes:
       - output:/var/www/html/output
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-apache
+    depends_on:
+      - app
+    environment:
+      LDAP_ENABLED: "false"
 
   db:
     image: mariadb:10.6

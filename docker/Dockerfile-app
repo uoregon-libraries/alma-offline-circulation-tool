@@ -1,0 +1,28 @@
+FROM rockylinux:9
+LABEL maintainer="Jeremy Echols <jechols@uoregon.edu>"
+
+# PHP & deps
+RUN dnf update -y && dnf upgrade -y
+RUN dnf module install -y php:8.2
+RUN dnf install -y php-mysqli
+
+# Make PHP suck just a tiny bit less
+RUN sed -i 's/^\s*variables_order\s*=.*$/variables_order = "EGPCS"/' /etc/php.ini
+
+# Set up and copy app to its image destination
+COPY src /app
+COPY src/include/configuration_sample.php /app/include/configuration.php
+VOLUME /app/output
+RUN mkdir -p /app/output
+RUN chmod 777 /app/output
+
+# Copy in PHP FPM settings
+COPY docker/php-fpm.d_www.conf /etc/php-fpm.d/www.conf
+
+# Stuff that's necessary for php-fpm to work in docker
+RUN mkdir -p /var/run/php-fpm
+COPY docker/docker-php-entrypoint /usr/local/bin/
+ENTRYPOINT ["docker-php-entrypoint"]
+STOPSIGNAL SIGQUIT
+EXPOSE 9000
+CMD ["php-fpm", "-F", "-O", "-R"]
