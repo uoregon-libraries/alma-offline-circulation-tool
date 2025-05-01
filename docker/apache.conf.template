@@ -1,0 +1,33 @@
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    LogLevel debug
+
+    # Redirect root to index.php
+    RedirectMatch ^/$ /index.php
+
+    # __LDAP_ENABLED_START__
+    <Location />
+        AuthName "Alma Offline Circulation Tool"
+        AuthType Basic
+        AuthBasicProvider ldap
+        AuthLDAPBindAuthoritative off
+
+        AuthLDAPBindDN "__LDAP_BIND_DN__"
+        AuthLDAPBindPassword "__LDAP_BIND_PASSWORD__"
+        AuthLDAPURL "__LDAP_URL__"
+
+        <RequireAny>
+            # __LDAP_REQUIRE_GROUPS__
+            Require valid-user
+        </RequireAny>
+
+        # Make sure proxied stuff gets remote user name
+        RequestHeader set X-Remote-User expr=%{REMOTE_USER}
+    </Location>
+    # __LDAP_ENABLED_END__
+
+    # Map PHP requests to the PHP-FPM container, adjusting the path
+    # Apache's DocumentRoot /var/www/html maps to /app in the PHP container
+    ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://app:9000/app/$1
+
+</VirtualHost>
