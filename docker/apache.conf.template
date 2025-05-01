@@ -2,6 +2,9 @@
     DocumentRoot /var/www/html
     LogLevel debug
 
+    # Redirect root to index.php
+    RedirectMatch ^/$ /index.php
+
     # __LDAP_ENABLED_START__
     <Location />
         AuthName "Alma Offline Circulation Tool"
