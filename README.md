@@ -1,5 +1,32 @@
 # Alma Offline Circulation Tool
 
+## Setup
+
+- Copy `compose.override.yml-example` to `compose.override.yml`. Set up ports
+  and LDAP variables as needed.
+- Copy `src/include/configuration_sample.php` to
+  `src/include/configuration.php` and adjust settings as needed. The defaults
+  will work fine for development, but production should have contact
+  information set up properly, and possibly database settings.
+- Build the project each time code changes! This isn't mounting PHP directly
+  into the running containers at the moment, other than the config file.
+- Use docker / podman's compose to run the project. The "web" service is what's
+  exposed to the public (or via another proxy), serving static files directly,
+  and contacting the "app" service for any PHP assets.
+
+We've made very deliberate choices to reduce security risks: "web" has no PHP
+files, which means there's no chance of Apache accidentally serving up files
+directly. All authentication is done by Apache using LDAP, so there's no chance
+of hacking a PHP login page. Apache also has no direct connection to the
+database: it has the static assets, LDAP configuration, and access to contact
+the "app" service. Neither the "app" nor "db" services are exposed to the host,
+which means you can never reach them from external systems.
+
+This app has minimal security risks anyway, being locked down to campus *and*
+protected by a login, but it's probably not a bad example for other projects.
+
+## Background / Info
+
 This tool is a set of PHP scripts that present an interface to a single-table
 MySQL database, which tracks patrons and items while Alma is down. In short, it
 is (as named) an offline circulation tool for Alma. It is worth noting that the
