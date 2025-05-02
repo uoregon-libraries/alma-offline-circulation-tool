@@ -7,6 +7,7 @@ services:
       - db
     volumes:
       - output:/var/www/html/output
+      - ./src/include/configuration.php:/app/include/configuration.php
 
   web:
     build:
