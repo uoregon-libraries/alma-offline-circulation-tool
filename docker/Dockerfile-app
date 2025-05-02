@@ -11,7 +11,6 @@ RUN sed -i 's/^\s*variables_order\s*=.*$/variables_order = "EGPCS"/' /etc/php.in
 
 # Set up and copy app to its image destination
 COPY src /app
-COPY src/include/configuration_sample.php /app/include/configuration.php
 VOLUME /app/output
 RUN mkdir -p /app/output
 RUN chmod 777 /app/output
